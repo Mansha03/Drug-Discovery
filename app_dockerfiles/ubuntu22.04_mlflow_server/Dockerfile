@@ -1,19 +1,17 @@
 FROM python:3.10.14-bookworm
 
-# Upgrade pip
-RUN pip install --upgrade pip
+RUN pip3 install mlflow==2.12.2
 
-# Install MLflow
-RUN pip install mlflow==2.12.2
+RUN pip3 install mysql-connector-python
 
-# Install MySQL connector for Python
-RUN pip install mysql-connector-python mysqlclient
+RUN pip3 install PyMySQL
 
-# Expose the default MLflow port
+RUN pip3 install mysqlclient
+
 EXPOSE 5000
 
-# Create directory for MLflow artifacts
-RUN mkdir -p /mlruns && chmod 777 /mlruns
+RUN mkdir /mlruns
 
-# Start the MLflow server
-CMD mlflow server --host 0.0.0.0 --port 5000 --backend-store
+RUN chmod 777 /mlruns
+
+CMD mlflow server --host 0.0.0.0 --port 5000

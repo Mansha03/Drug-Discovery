@@ -12,10 +12,16 @@ services:
       - /mnt/wsl/docker/app_data/mysql_db:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: db_mlflow
       MYSQL_USER: mlflow_user
       MYSQL_PASSWORD: mlflow
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
 
   mlflow:
     build:
